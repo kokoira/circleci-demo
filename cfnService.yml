@@ -20,7 +20,7 @@ Resources:
       EnableDnsSupport: true
       Tags: 
         - Key: Name
-          Value: !Sub ${NameBase}-vp
+          Value: !Sub ${NameBase}-vpc
 
   # インターネットゲートウェイ
   IGW:
@@ -198,7 +198,7 @@ Resources:
         - !Ref RDSSecurityGroup
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-db
+          Value: !Sub ${NameBase}-rds
     DeletionPolicy: "Delete"
   
   DBParameterGroup:
