@@ -36,7 +36,7 @@ jobs:
       - run:
           name: "Wait Stack Complete"
           command: "aws cloudformation wait stack-update-complete --stack-name circleci-demo-stack"
-          no_output_timeout: 20m
+          no_output_timeout: 30m
   
   ansible-example:
     executor: ansible-playbook/default
@@ -51,7 +51,6 @@ jobs:
           playbook: "playbook.yml"
           inventory: ANSIBLE_INVENTORY
           playbook-options: "-u ec2-user --private-key ~/.ssh/id_rsa  -i hosts/inventory"
-          no_output_timeout: 1h
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
