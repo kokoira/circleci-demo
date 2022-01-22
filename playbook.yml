@@ -1,0 +1,14 @@
+---
+
+- hosts: web
+  become: yes
+  become_user: root
+  gather_facts: false
+  roles:
+     - yum_update
+     - nodejs
+     - yarn
+     - ruby
+     - mysql
+     - rails
+     - nginx
