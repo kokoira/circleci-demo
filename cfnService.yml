@@ -198,7 +198,7 @@ Resources:
         - !Ref RDSSecurityGroup
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-rds
+          Value: !Sub ${NameBase}-db
     DeletionPolicy: "Delete"
   
   DBParameterGroup:
