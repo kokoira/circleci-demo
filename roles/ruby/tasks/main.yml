@@ -1,0 +1,62 @@
+---
+
+- name: yum Install packages
+  yum:
+    state: latest
+    lock_timeout: 180
+    name:
+      - git
+      - gcc
+      - gcc-c++
+      - openssl-devel
+      - libyaml-devel
+      - readline-devel
+      - zlib-devel
+      - libffi-devel
+
+- name: Install rbenv
+  git:
+      repo: https://github.com/sstephenson/rbenv.git
+      dest: /usr/local/rbenv
+
+- name: 'rbenvのshファイルを配置'
+  template:
+      src: rbenv_system.sh.j2
+      dest: /etc/profile.d/rbenv.sh
+      owner: root
+      group: root
+      mode: 0755
+
+- name: 'ruby-buildインストール'
+  git:
+      repo: https://github.com/sstephenson/ruby-build.git
+      dest: /usr/local/rbenv/plugins/ruby-build
+
+- name: 'deploy用のグループを作成'
+  group:
+      name: deploy
+      
+- name: 'ansibleユーザーをdeployグループに所属'
+  user:
+      name: ansible
+      groups: deploy
+
+- name: 'rbenvディレクトリの所有グループをdeployに変更'
+  file:
+      path: /usr/local/rbenv
+      owner: root
+      group: deploy
+      recurse: yes
+      state: directory
+
+- name: 'rubyインストール'
+  shell: bash -lc "rbenv install --skip-existing 2.6.3"
+
+- name: 'globalセット'
+  shell: bash -lc "rbenv global 2.6.3"
+
+- name: 'bundlerインストール'
+  gem:
+      name: bundler
+      user_install: no
+      executable: /usr/local/rbenv/shims/gem

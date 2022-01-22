@@ -1,0 +1,27 @@
+---
+
+- name: remove mariadb-libs
+  yum:
+    name: mariadb-*
+    state: absent
+
+- name: install mysql repository
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+    state: present
+    validate_certs: yes
+
+- name: install mysql-community-server mysql-community-devel mysql-python 
+  yum:
+      state: present
+      name:
+        - mysql-community-server
+        - mysql-community-devel
+        - MySQL-python
+      enablerepo: mysql80-community
+
+- name: running and enabled mysqld
+  service:
+     name: mysqld
+     state: started
+     enabled: yes
