@@ -22,3 +22,6 @@
 
 - name: rbenv rehash
   shell: bash -lc "rbenv rehash"
+
+- name: change permission
+  shell: bash -lc "sudo chown -R ec2-user ."
