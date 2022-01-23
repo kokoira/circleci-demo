@@ -66,6 +66,12 @@ jobs:
           command: 'gem install serverspec'
           name: "Install serverspec"
       - run:
+          command: 'gem install ed25519'
+          name: "Install serverspec"
+      - run:
+          command: 'gem install bcrypt_pbkdf'
+          name: "Install serverspec"
+      - run:
           command: 'rake spec'
           name: "Execute serverspec"
 # Invoke jobs via workflows
