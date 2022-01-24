@@ -129,7 +129,7 @@ Resources:
     Properties:
       AvailabilityZone: ap-northeast-1a
       KeyName: circleci-demo
-      ImageId: ami-0ad34c34d47746008
+      ImageId: ami-0ae594528f26a839d
       InstanceType: t2.micro
       NetworkInterfaces:
         - AssociatePublicIpAddress: "true"
