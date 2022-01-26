@@ -1,5 +1,5 @@
 upstream unicorn {
-    server  unix:/home/ec2-user/cloud9-RaiseTech-4-5/unicorn.sock;
+    server  unix:/home/ec2-user/environment/cloud9-RaiseTech-4-5/tmp/unicorn.sock;
 }
 
 server {
@@ -9,7 +9,7 @@ server {
     access_log  /var/log/nginx/access.log;
     error_log   /var/log/nginx/error.log;
 
-    root /home/ec2-user/cloud9-RaiseTech-4-5/public;
+    root /home/ec2-user/environment/cloud9-RaiseTech-4-5/public;
 
     client_max_body_size 100m;
     error_page  404              /404.html;

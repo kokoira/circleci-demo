@@ -2,8 +2,8 @@ worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 timeout 15
 preload_app true
 
-listen '/home/ec2-user/cloud9-RaiseTech-4-5/tmp/unicorn.sock'
-pid    '/home/ec2-user/cloud9-RaiseTech-4-5/tmp/unicorn.pid'
+listen '/home/ec2-user/environment/cloud9-RaiseTech-4-5/tmp/unicorn.sock'
+pid    '/home/ec2-user/environment/cloud9-RaiseTech-4-5/tmp/unicorn.pid'
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
