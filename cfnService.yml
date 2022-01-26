@@ -7,13 +7,13 @@ Parameters:
     Type: String
     Default: 10.0.0.0/16
   NameBase:
-    Description: name tag Value
+    Description: Name Tag Value
     Type: String
-    Default: circleci-demo
+    Default: practice-cfn
 
 Resources:
   # VPC
-  myVPC:
+  VPC:
     Type: AWS::EC2::VPC
     Properties: 
       CidrBlock: !Ref VpcCidrBlock
@@ -34,67 +34,70 @@ Resources:
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       InternetGatewayId: !Ref IGW
 
   # パブリックサブネット
-  pubSub1a:
+  PubSub1a:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: ap-northeast-1a
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       CidrBlock: 10.0.10.0/24
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-pub-subnet-1a
-  pubSub1c:
+          Value: !Sub ${NameBase}-pubsub-1a
+
+  PubSub1c:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: ap-northeast-1c
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       CidrBlock: 10.0.11.0/24
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-pub-subnet-1c
+          Value: !Sub ${NameBase}-pubsub-1c
 
   # プライベートサブネット
-  priSub1a:
+  PriSub1a:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: ap-northeast-1a
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       CidrBlock: 10.0.20.0/24
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-pri-subnet-1a
-  priSub1c:
+          Value: !Sub ${NameBase}-prisub-1a
+
+  PriSub1c:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: ap-northeast-1c
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       CidrBlock: 10.0.21.0/24
       Tags:
         - Key: Name
-          Value: !Sub ${NameBase}-pri-subnet-1c
+          Value: !Sub ${NameBase}-prisub-1c
 
   # ルートテーブル
   PubSubRT:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       Tags:
         - Key: Name
           Value: !Sub ${NameBase}-pubsub-rt
+
   PriSubRT:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref myVPC
+      VpcId: !Ref VPC
       Tags:
         - Key: Name
           Value: !Sub ${NameBase}-prisub-rt
 
-  # PubSubとインターネット間のルーティング
-  PubSubRTToInternet:
+  # PubSubRTとインターネット間のルーティング
+  PubSubToInternet:
     Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PubSubRT
@@ -105,23 +108,34 @@ Resources:
   AssoPubSubRT1a:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref pubSub1a
+      SubnetId: !Ref PubSub1a
       RouteTableId: !Ref PubSubRT
 
   AssoPubSubRT1c:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref pubSub1c
+      SubnetId: !Ref PubSub1c
       RouteTableId: !Ref PubSubRT
+
+  AssoPriSubRT1a:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PriSub1a
+      RouteTableId: !Ref PriSubRT
+
+  AssoPriSubRT1c:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PriSub1c
+      RouteTableId: !Ref PriSubRT
 
   #ElasticIP作成
   ElasticIPAssociate:
     Type: AWS::EC2::EIPAssociation
-    DependsOn: MyEC2Instance
+    DependsOn: EC2Instance
     Properties: 
       EIP: 35.76.45.95
-      InstanceId: !Ref MyEC2Instance
-    
+      InstanceId: !Ref EC2Instance
 
   # EC2インスタンス
   MyEC2Instance:
@@ -134,7 +148,7 @@ Resources:
       NetworkInterfaces:
         - AssociatePublicIpAddress: "true"
           DeviceIndex: "0"
-          SubnetId: !Ref pubSub1a
+          SubnetId: !Ref PubSub1a
           GroupSet:
             - !Ref EC2SG
       UserData: !Base64 |
@@ -149,8 +163,8 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub ${NameBase}-ec2-sg
-      GroupDescription: Allow SSH and HTTP access only MyIP
-      VpcId: !Ref myVPC
+      GroupDescription: Allow SSH and HTTP access only IP address
+      VpcId: !Ref VPC
       SecurityGroupIngress:
         # http
         - IpProtocol: tcp
@@ -173,16 +187,17 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${NameBase}-ec2-sg
+
   # RDS
-  MyDBInstance:
+  DBInstance:
     Type: AWS::RDS::DBInstance
     Properties:
       AllocatedStorage: "16"
       DBInstanceClass: db.t2.micro
       AvailabilityZone: ap-northeast-1a
       BackupRetentionPeriod: "7"
-      DBInstanceIdentifier: !Sub ${NameBase}-web
-      DBName: circlecidemo
+      DBInstanceIdentifier: !Sub ${NameBase}-rds
+      DBName: circleci2demo
       DBParameterGroupName: !Ref DBParameterGroup
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: mysql
@@ -200,34 +215,37 @@ Resources:
         - Key: Name
           Value: !Sub ${NameBase}-rds
     DeletionPolicy: "Delete"
-  
+
+  # パラメータグループ
   DBParameterGroup:
     Type: "AWS::RDS::DBParameterGroup"
     Properties:
       Family: "MySQL8.0"
       Description: !Sub "${NameBase}-mysql80"
 
+  # セキュリティグループ
   RDSSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
-      VpcId: !Ref myVPC
-      GroupName: !Sub "${NameBase}-db-sg"
-      GroupDescription: !Sub "${NameBase}-db-sg"
+      VpcId: !Ref VPC
+      GroupName: !Sub "${NameBase}-rds-sg"
+      GroupDescription: !Sub "${NameBase}-rds-sg"
       Tags:
         - Key: "Name"
-          Value: !Sub "${NameBase}-db-sg"
-# Rule
+          Value: !Sub "${NameBase}-rds-sg"
       SecurityGroupIngress:
+        # MySQL/Aurora
         - IpProtocol: tcp
           FromPort: 3306
           ToPort: 3306
           SourceSecurityGroupId: !Ref EC2SG
 
+  # サブネットグループ
   DBSubnetGroup: 
     Type: "AWS::RDS::DBSubnetGroup"
     Properties: 
-      DBSubnetGroupName: !Sub "${NameBase}-db-subnet-gp"
-      DBSubnetGroupDescription: !Sub "${NameBase}-db-subnet-gp"
+      DBSubnetGroupName: !Sub "${NameBase}-dbsub-gp"
+      DBSubnetGroupDescription: !Sub "${NameBase}-dbsub-gp"
       SubnetIds: 
-        - !Ref priSub1a
-        - !Ref priSub1c
+        - !Ref PriSub1a
+        - !Ref PriSub1c
