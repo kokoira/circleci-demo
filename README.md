@@ -26,7 +26,7 @@ circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRa
 - AWS上でインフラ構築からRailsの環境構築、テストまでを自動で行います。
 # 注意事項
 初回実行時は、.circleciのconfig.ymlにあるaws-cli-exampleの記載を変更する必要があります。  
-初回実行時  
+## 初回実行時  
 ```
       - run:
           name: "create stack"
@@ -36,7 +36,7 @@ circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRa
           command: "aws cloudformation wait stack-create-complete --stack-name circleci-demo-stack"
           no_output_timeout: 30m
 ```  
-2回目以降  
+## 2回目以降  
 ```
       - run:
           name: "update stack"
