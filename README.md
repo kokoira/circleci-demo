@@ -18,7 +18,7 @@ circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRa
 - CircleCI
 - Github
 # 構成図
-![sample]()  
+![circleci-demo](https://user-images.githubusercontent.com/95961416/151158552-1f2cf180-b332-40d9-b5b2-48b6956673f6.png) 
 # 特徴
 - EC2インスタンスはElastic IPを使用しています。
 - RDSインスタンスはMySQLを使用しています。
