@@ -1,6 +1,6 @@
 ---
 
-- name: yum Install packages
+- name: yum install packages
   yum:
     state: latest
     lock_timeout: 180
@@ -14,12 +14,12 @@
       - zlib-devel
       - libffi-devel
 
-- name: Install rbenv
+- name: install rbenv
   git:
       repo: https://github.com/sstephenson/rbenv.git
       dest: /usr/local/rbenv
 
-- name: 'rbenvのshファイルを配置'
+- name: generate rbenv .sh file
   template:
       src: rbenv_system.sh.j2
       dest: /etc/profile.d/rbenv.sh
@@ -27,21 +27,21 @@
       group: root
       mode: 0755
 
-- name: 'ruby-buildインストール'
+- name: install ruby-build
   git:
       repo: https://github.com/sstephenson/ruby-build.git
       dest: /usr/local/rbenv/plugins/ruby-build
 
-- name: 'deploy用のグループを作成'
+- name: generate group for deploy
   group:
       name: deploy
       
-- name: 'ansibleユーザーをdeployグループに所属'
+- name: add ansible user to deploy group
   user:
       name: ansible
       groups: deploy
 
-- name: 'rbenvディレクトリの所有グループをdeployに変更'
+- name: change ownership group of rbenv to deploy group
   file:
       path: /usr/local/rbenv
       owner: root
@@ -49,13 +49,13 @@
       recurse: yes
       state: directory
 
-- name: 'rubyインストール'
+- name: install rbenv
   shell: bash -lc "rbenv install --skip-existing 2.6.3"
 
-- name: 'globalセット'
+- name: set installed ruby version to global
   shell: bash -lc "rbenv global 2.6.3"
 
-- name: 'bundlerインストール'
+- name: install bundler
   gem:
       name: bundler
       user_install: no

@@ -20,7 +20,7 @@
         - MySQL-python
       enablerepo: mysql80-community
 
-- name: running and enabled mysqld
+- name: start and enable mysqld
   service:
      name: mysqld
      state: started
