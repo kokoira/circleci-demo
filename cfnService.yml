@@ -134,7 +134,7 @@ Resources:
     Type: AWS::EC2::EIPAssociation
     DependsOn: EC2Instance
     Properties: 
-      EIP: 35.76.45.95
+      EIP: 35.77.159.128
       InstanceId: !Ref EC2Instance
 
   # EC2インスタンス
