@@ -45,7 +45,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "4b:7a:12:f2:a3:0f:9f:fb:9b:05:8e:2c:3b:ad:bc:d3" 
+            - "d0:05:15:55:c1:3a:8a:81:b4:29:1e:e8:ac:9d:43:9d" 
       - ansible-playbook/install:
           version: "2.9.23"
       - ansible-playbook/playbook:
@@ -59,7 +59,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "4b:7a:12:f2:a3:0f:9f:fb:9b:05:8e:2c:3b:ad:bc:d3" 
+            - "d0:05:15:55:c1:3a:8a:81:b4:29:1e:e8:ac:9d:43:9d" 
       - ruby/install:
           version: "2.7"
       - run:
