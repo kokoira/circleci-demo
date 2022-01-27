@@ -138,7 +138,7 @@ Resources:
       InstanceId: !Ref EC2Instance
 
   # EC2インスタンス
-  MyEC2Instance:
+  EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone: ap-northeast-1a
