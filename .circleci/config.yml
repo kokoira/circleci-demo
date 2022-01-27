@@ -51,7 +51,7 @@ jobs:
       - ansible-playbook/playbook:
           playbook: "playbook.yml"
           inventory: ANSIBLE_INVENTORY
-          playbook-options: "-u ec2-user --private-key ~/.ssh/id_rsa  -i hosts/inventory"
+          # playbook-options: "-u ec2-user --private-key ~/.ssh/id_rsa  -i hosts/inventory"
   
   serverspec-example:
     executor: ruby/default
