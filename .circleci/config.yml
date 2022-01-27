@@ -80,15 +80,15 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-      - aws-cli-example:
-          requires:
-            - say-hello
-      - ansible-example:
-          requires:
-            - say-hello
-            - aws-cli-example
-      - serverspec-example:
-          requires:
-            - say-hello
-            - aws-cli-example
-            - ansible-example
+      # - aws-cli-example:
+          # requires:
+            # - say-hello
+      # - ansible-example:
+          # requires:
+            # - say-hello
+            # - aws-cli-example
+      # - serverspec-example:
+          # requires:
+            # - say-hello
+            # - aws-cli-example
+            # - ansible-example
