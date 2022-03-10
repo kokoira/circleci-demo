@@ -1,9 +1,7 @@
 # circleci-demo
 circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRailsの環境構築、テストまでを自動で行います。  
 
-
 ![ポートフォリオEX](https://user-images.githubusercontent.com/95961416/157727490-eeced343-8f4d-4e0c-8870-29de0c3478ba.gif)  
-
 
 # 使用技術
 - AWS
@@ -23,7 +21,9 @@ circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRa
 - CircleCI
 - Github
 # 構成図
+
 ![circleci-demo 構成図](https://user-images.githubusercontent.com/95961416/151158772-36907eb6-211d-429a-a205-37d9bb79c3b1.png)
+
 # 特徴
 - EC2インスタンスはElastic IPを使用しています。
 - RDSインスタンスはMySQLを使用しています。
