@@ -32,11 +32,11 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_DEFAULT_REGION
       - run:
-          name: "create stack"
-          command: "aws cloudformation create-stack --stack-name circleci-demo-stack --region ap-northeast-1 --template-body file://cfnService.yml"
+          name: "update stack"
+          command: "aws cloudformation update-stack --stack-name circleci-demo-stack --region ap-northeast-1 --template-body file://cfnService.yml"
       - run:
           name: "wait stack complete"
-          command: "aws cloudformation wait stack-create-complete --stack-name circleci-demo-stack"
+          command: "aws cloudformation wait stack-update-complete --stack-name circleci-demo-stack"
           no_output_timeout: 30m
   
   ansible-example:

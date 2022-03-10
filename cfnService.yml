@@ -134,7 +134,7 @@ Resources:
     Type: AWS::EC2::EIPAssociation
     DependsOn: EC2Instance
     Properties: 
-      EIP: 52.69.149.21
+      EIP: 35.77.159.128
       InstanceId: !Ref EC2Instance
 
   # EC2インスタンス
@@ -143,7 +143,7 @@ Resources:
     Properties:
       AvailabilityZone: ap-northeast-1a
       KeyName: circleci-demo
-      ImageId: ami-0419d091c634e47b2
+      ImageId: ami-0cdf89c9ec7d049e9
       InstanceType: t2.micro
       NetworkInterfaces:
         - AssociatePublicIpAddress: "true"
