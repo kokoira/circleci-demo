@@ -20,7 +20,7 @@ Resources:
       EnableDnsSupport: true
       Tags: 
         - Key: Name
-          Value: !Sub ${NameBase}-vpc
+          Value: !Sub ${NameBase}-vp
 
   # インターネットゲートウェイ
   IGW:
