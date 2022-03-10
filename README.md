@@ -1,5 +1,6 @@
 # circleci-demo
-circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRailsの環境構築、テストまでを自動で行います。  
+circleci-demoは、CircleCIを使用して、AWS上でインフラ構築からRailsの環境構築、テストまでを自動で行います。 
+![ポートフォリオEX](https://user-images.githubusercontent.com/95961416/157727490-eeced343-8f4d-4e0c-8870-29de0c3478ba.gif)  
 # 使用技術
 - AWS
   - VPC
